@@ -287,7 +287,7 @@ int suspend_devices_and_enter(suspend_state_t state)
 
 	do {
 		error = suspend_enter(state, &wakeup);
-	} while (!error && !wakeup && need_suspend_ops(state)
+	} while (!error && !wakeup && need_suspend_ops(state));
 
  Resume_devices:
 	suspend_test_start();
