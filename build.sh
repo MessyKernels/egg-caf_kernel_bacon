@@ -30,8 +30,6 @@ export CROSS_COMPILE=${HOME}/secret/chamber/cortex_a15/bin/arm-eabi-
 KERNEL_DIR="${HOME}/secret/oppo-omni"
 ANYKERNEL_DIR="${HOME}/secret/chamber/anykernel"
 PATCH_DIR="${HOME}/secret/chamber/anykernel/patch"
-ZIP_MOVE_STABLE="${HOME}/secret/out/$DEVICE"
-ZIP_MOVE_NIGHTLY="${HOME}/secret/out/$DEVICE/nightly"
 ZIMAGE_DIR="$KERNEL_DIR/arch/arm/boot"
 
 # Functions
@@ -56,7 +54,9 @@ function defconfig {
 				;;
 		esac
 		done
-}		
+		ZIP_MOVE_STABLE="${HOME}/secret/out/$DEVICE"
+		ZIP_MOVE_NIGHTLY="${HOME}/secret/out/$DEVICE/nightly"
+}
 
 function clean_all {
 		cd $ANYKERNEL_DIR
