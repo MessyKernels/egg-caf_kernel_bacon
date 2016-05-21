@@ -245,8 +245,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = gcc
 HOSTCXX      = g++
-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O3 -fomit-frame-pointer
-HOSTCXXFLAGS = -O3
+HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O3 -fgcse-las -fomit-frame-pointer
+HOSTCXXFLAGS = -O3 -fgcse-las
 
 # Decide whether to build built-in, modular, or both.
 # Normally, just do built-in.
@@ -368,9 +368,12 @@ LINUXINCLUDE    := -I$(srctree)/arch/$(hdr-arch)/include \
 
 KBUILD_CPPFLAGS := -D__KERNEL__
 
-YOSHI_FLAGS	:= -pipe -munaligned-access -mfloat-abi=softfp -mvectorize-with-neon-quad -mfpu=neon-vfpv4
-YOSHI_FLAGS	+= -fno-pic -Wno-unused -Wno-maybe-uninitialized
-YOSHI_FLAGS	+= --param l1-cache-size=16 --param l1-cache-line-size=16 --param l2-cache-size=2048
+# YoshiShaPow's Optimizations
+YOSHI_FLAGS	:= -pipe -munaligned-access -mfloat-abi=softfp -mvectorize-with-neon-quad -mfpu=neon-vfpv4 \
+		   -fmodulo-sched -fmodulo-sched-allow-regmoves \
+		   -funswitch-loops -fpredictive-commoning -fgcse-after-reload \
+		   -fno-pic -Wno-unused -Wno-maybe-uninitialized \
+		   --param l1-cache-size=16 --param l1-cache-line-size=16 --param l2-cache-size=2048
 
 KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
